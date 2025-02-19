@@ -6,8 +6,6 @@
     android:padding="16dp"
     android:background="@android:color/white">
 
-    <!-- Status Text (Displays Player Turn / Winner Message) -->
-
 
     <!-- Tic-Tac-Toe Grid -->
     <TextView
