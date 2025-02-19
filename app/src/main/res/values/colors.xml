@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="soft_black">#333333</color>
+    <color name="tic_tac_toe_background">#238A97</color>
+    <color name="button_background">#126BB3</color>
+    <color name="button_text">#F7F8F7</color>
+    <color name="x_color">#D32F2F</color>
+    <color name="o_color">#388E3C</color>
+
 </resources>

@@ -1,20 +1,23 @@
 package com.example.tictactoe;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import java.util.Arrays;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    int activePlayer = 0; // 0 - X, 1 - O
-    int[] gameState = {2,2,2,2,2,2,2,2,2}; // 2 - Empty, 0 - X, 1 - O
+    int activePlayer = 0; // 0 - X (Red), 1 - O (Green)
+    int[] gameState = {2, 2, 2, 2, 2, 2, 2, 2, 2}; // 2 - Empty, 0 - X, 1 - O
     int[][] winPositions = {
-            {0,1,2}, {3,4,5}, {6,7,8}, // Rows
-            {0,3,6}, {1,4,7}, {2,5,8}, // Columns
-            {0,4,8}, {2,4,6}  // Diagonals
+            {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // Rows
+            {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // Columns
+            {0, 4, 8}, {2, 4, 6}  // Diagonals
     };
     boolean gameActive = true;
 
@@ -22,17 +25,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        updateStatusText();
     }
 
     public void cellClicked(View view) {
+        if (!gameActive) return;
+
         ImageView img = (ImageView) view;
         int tappedCell = Integer.parseInt(img.getTag().toString());
 
-        if (!gameActive || gameState[tappedCell] != 2) return;
+        if (gameState[tappedCell] != 2) return;
 
         gameState[tappedCell] = activePlayer;
 
-        // Set the appropriate symbol
         if (activePlayer == 0) {
             img.setImageResource(R.drawable.x_symbol);
             activePlayer = 1;
@@ -41,21 +46,40 @@ public class MainActivity extends AppCompatActivity {
             activePlayer = 0;
         }
 
-        // Set initial scale to 0 and animate to full size (pop-up effect)
+        // Pop-up animation effect
         img.setScaleX(0f);
         img.setScaleY(0f);
         img.animate().scaleX(1f).scaleY(1f).setDuration(300).start();
 
-        // Update the status text for the next player's turn
-        TextView status = findViewById(R.id.status);
+        checkWinner();
         if (gameActive) {
-            status.setText("Player " + (activePlayer == 0 ? "X" : "O") + "'s Turn");
+            updateStatusText();
+        }
+    }
+
+    private void updateStatusText() {
+        TextView status = findViewById(R.id.status);
+        int newColor;
+
+        if (activePlayer == 0) {
+            status.setText(getString(R.string.player_x_turn));
+            newColor = ContextCompat.getColor(this, R.color.x_color);
+        } else {
+            status.setText(getString(R.string.player_o_turn));
+            newColor = ContextCompat.getColor(this, R.color.o_color);
         }
 
-        checkWinner();
+        // Smooth color transition animation
+        ObjectAnimator colorAnim = ObjectAnimator.ofObject(
+                status, "textColor", new ArgbEvaluator(),
+                status.getCurrentTextColor(), newColor
+        );
+        colorAnim.setDuration(500);
+        colorAnim.start();
     }
 
     public void checkWinner() {
+        TextView status = findViewById(R.id.status);
         for (int[] winPosition : winPositions) {
             if (gameState[winPosition[0]] == gameState[winPosition[1]] &&
                     gameState[winPosition[1]] == gameState[winPosition[2]] &&
@@ -63,39 +87,50 @@ public class MainActivity extends AppCompatActivity {
 
                 gameActive = false;
                 String winner = (gameState[winPosition[0]] == 0) ? "X" : "O";
-                TextView status = findViewById(R.id.status);
-                status.setText("Player " + winner + " Wins!");
-                return;
+                int winnerColor = (winner.equals("X")) ?
+                        ContextCompat.getColor(this, R.color.x_color) :
+                        ContextCompat.getColor(this, R.color.o_color);
+
+                status.setText(getString(winner.equals("X") ? R.string.player_x_wins : R.string.player_o_wins));
+                status.setTextColor(winnerColor);
+
+                return;  // Exit loop early when a winner is found
             }
         }
 
-        boolean draw = true;
-        for (int state : gameState) {
-            if (state == 2) draw = false;
-        }
-
-        if (draw) {
+        // Check for a draw
+        if (!isMovesLeft()) {
             gameActive = false;
-            TextView status = findViewById(R.id.status);
-            status.setText("It's a Draw!");
+            status.setText(getString(R.string.draw_message));
+            status.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray)); // Draw message in gray
         }
+    }
+
+    private boolean isMovesLeft() {
+        for (int state : gameState) {
+            if (state == 2) return true;
+        }
+        return false;
     }
 
     public void restartGame(View view) {
         gameActive = true;
         activePlayer = 0;
-        for (int i = 0; i < gameState.length; i++) {
-            gameState[i] = 2;
-        }
+        Arrays.fill(gameState, 2); // Replaces the loop with Arrays.fill()
 
-        ((TextView) findViewById(R.id.status)).setText("Player X's Turn");
+        TextView status = findViewById(R.id.status);
+        status.setText(getString(R.string.player_x_turn));
+        status.setTextColor(ContextCompat.getColor(this, R.color.x_color));
 
-        // Loop through actual IDs (cell_00, cell_01, ..., cell_22)
+        int[][] cellIds = {
+                {R.id.cell_00, R.id.cell_01, R.id.cell_02},
+                {R.id.cell_10, R.id.cell_11, R.id.cell_12},
+                {R.id.cell_20, R.id.cell_21, R.id.cell_22}
+        };
+
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                String cellID = "cell_" + row + col;
-                int resID = getResources().getIdentifier(cellID, "id", getPackageName());
-                ((ImageView) findViewById(resID)).setImageResource(0);
+                ((ImageView) findViewById(cellIds[row][col])).setImageResource(0);
             }
         }
     }

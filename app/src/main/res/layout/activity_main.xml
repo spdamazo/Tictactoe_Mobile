@@ -7,178 +7,155 @@
     android:background="@android:color/white">
 
     <!-- Status Text (Displays Player Turn / Winner Message) -->
+
+
+    <!-- Tic-Tac-Toe Grid -->
     <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player X's Turn"
-        android:textSize="24sp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="@string/player_x_turn"
+        android:text="@string/player_x_turn"
+        android:textColor="@color/soft_black"
+        android:textSize="40sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Tic-Tac-Toe Board Container -->
-    <FrameLayout
-        android:id="@+id/gridContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="3"
+        android:padding="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@id/restartButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/status">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/restartButton">
 
-        <!-- Tic-Tac-Toe Grid -->
-        <GridLayout
-            android:id="@+id/gridLayout"
-            android:layout_width="match_parent"
-            android:layout_height="426dp"
-            android:columnCount="3"
-            android:padding="8dp"
-            android:rowCount="3">
+        <!-- Tic-Tac-Toe Cells -->
 
-            <!-- Row 1 -->
-            <ImageView
-                android:id="@+id/cell_00"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Cell 0,0"
-                android:onClick="cellClicked"
-                android:scaleType="fitCenter"
-                android:tag="0" />
+        <ImageView
+            android:id="@+id/cell_00"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:background="@color/tic_tac_toe_background"
+            android:onClick="cellClicked"
+            android:scaleType="fitCenter"
+            android:tag="0"
+            android:contentDescription="@string/cell_00" />
 
-            <ImageView
-                android:id="@+id/cell_01"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Cell 0,1"
-                android:onClick="cellClicked"
-                android:scaleType="fitCenter"
-                android:tag="1" />
+        <ImageView
+            android:id="@+id/cell_01"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:background="@color/tic_tac_toe_background"
+            android:onClick="cellClicked"
+            android:scaleType="fitCenter"
+            android:tag="1"
+            android:contentDescription="@string/cell_01" />
 
-            <ImageView
-                android:id="@+id/cell_02"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Cell 0,2"
-                android:onClick="cellClicked"
-                android:scaleType="fitCenter"
-                android:tag="2" />
+        <ImageView
+            android:id="@+id/cell_02"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:background="@color/tic_tac_toe_background"
+            android:onClick="cellClicked"
+            android:scaleType="fitCenter"
+            android:tag="2"
+            android:contentDescription="@string/cell_02" />
 
-            <!-- Row 2 -->
-            <ImageView
-                android:id="@+id/cell_10"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Cell 1,0"
-                android:onClick="cellClicked"
-                android:scaleType="fitCenter"
-                android:tag="3" />
+        <ImageView
+            android:id="@+id/cell_10"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:background="@color/tic_tac_toe_background"
+            android:onClick="cellClicked"
+            android:scaleType="fitCenter"
+            android:tag="3"
+            android:contentDescription="@string/cell_10" />
 
-            <ImageView
-                android:id="@+id/cell_11"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Cell 1,1"
-                android:onClick="cellClicked"
-                android:scaleType="fitCenter"
-                android:tag="4" />
+        <ImageView
+            android:id="@+id/cell_11"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:background="@color/tic_tac_toe_background"
+            android:onClick="cellClicked"
+            android:scaleType="fitCenter"
+            android:tag="4"
+            android:contentDescription="@string/cell_11" />
 
-            <ImageView
-                android:id="@+id/cell_12"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Cell 1,2"
-                android:onClick="cellClicked"
-                android:scaleType="fitCenter"
-                android:tag="5" />
+        <ImageView
+            android:id="@+id/cell_12"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:background="@color/tic_tac_toe_background"
+            android:onClick="cellClicked"
+            android:scaleType="fitCenter"
+            android:tag="5"
+            android:contentDescription="@string/cell_12" />
 
-            <!-- Row 3 -->
-            <ImageView
-                android:id="@+id/cell_20"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Cell 2,0"
-                android:onClick="cellClicked"
-                android:scaleType="fitCenter"
-                android:tag="6" />
+        <ImageView
+            android:id="@+id/cell_20"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:background="@color/tic_tac_toe_background"
+            android:onClick="cellClicked"
+            android:scaleType="fitCenter"
+            android:tag="6"
+            android:contentDescription="@string/cell_20" />
 
-            <ImageView
-                android:id="@+id/cell_21"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Cell 2,1"
-                android:onClick="cellClicked"
-                android:scaleType="fitCenter"
-                android:tag="7" />
+        <ImageView
+            android:id="@+id/cell_21"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:background="@color/tic_tac_toe_background"
+            android:onClick="cellClicked"
+            android:scaleType="fitCenter"
+            android:tag="7"
+            android:contentDescription="@string/cell_21" />
 
-            <ImageView
-                android:id="@+id/cell_22"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="Cell 2,2"
-                android:onClick="cellClicked"
-                android:scaleType="fitCenter"
-                android:tag="8" />
-        </GridLayout>
-
-        <!-- Horizontal Grid Lines -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="130dp"
-            android:background="@android:color/black" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="250dp"
-            android:background="@android:color/black" />
-
-        <!-- Vertical Grid Lines -->
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="130dp"
-            android:layout_marginBottom="170dp"
-            android:background="@android:color/black" />
-
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="250dp"
-            android:layout_marginBottom="170dp"
-            android:background="@android:color/black" />
-
-    </FrameLayout>
+        <ImageView
+            android:id="@+id/cell_22"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="2dp"
+            android:background="@color/tic_tac_toe_background"
+            android:onClick="cellClicked"
+            android:scaleType="fitCenter"
+            android:tag="8"
+            android:contentDescription="@string/cell_22" />
+    </GridLayout>
 
     <!-- Restart Button -->
     <Button
         android:id="@+id/restartButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Restart Game"
-        android:textSize="18sp"
-        android:padding="12dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:textColor="@android:color/white"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/button_background"
         android:onClick="restartGame"
+        android:padding="12dp"
+        android:text="@string/restart_game"
+        android:textColor="@color/button_text"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="32dp"/>
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

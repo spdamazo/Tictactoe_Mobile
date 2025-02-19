@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">Tictactoe</string>
+    <string name="app_name">Tic-Tac-Toe</string>
+
+    <!-- Player Turn Messages -->
+    <string name="player_x_turn">Player X\'s Turn</string>
+    <string name="player_o_turn">Player O\'s Turn</string>
+
+    <!-- Winner Messages -->
+    <string name="player_x_wins">Player X Wins!</string>
+    <string name="player_o_wins">Player O Wins!</string>
+
+    <!-- Draw Message -->
+    <string name="draw_message">It\'s a Draw!</string>
+
+    <!-- Restart Button -->
+    <string name="restart_game">Restart Game</string>
+    <string name="restart_button_desc">Button to restart the Tic-Tac-Toe game</string>
+
+    <!-- Tic-Tac-Toe Grid Cell Descriptions -->
+    <string name="cell_00">Cell 00 of Tic-Tac-Toe grid</string>
+    <string name="cell_01">Cell 01 of Tic-Tac-Toe grid</string>
+    <string name="cell_02">Cell 02 of Tic-Tac-Toe grid</string>
+    <string name="cell_10">Cell 10 of Tic-Tac-Toe grid</string>
+    <string name="cell_11">Cell 11 of Tic-Tac-Toe grid</string>
+    <string name="cell_12">Cell 12 of Tic-Tac-Toe grid</string>
+    <string name="cell_20">Cell 20 of Tic-Tac-Toe grid</string>
+    <string name="cell_21">Cell 21 of Tic-Tac-Toe grid</string>
+    <string name="cell_22">Cell 22 of Tic-Tac-Toe grid</string>
 </resources>
+
