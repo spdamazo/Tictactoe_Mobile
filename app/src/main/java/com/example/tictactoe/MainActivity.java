@@ -10,6 +10,7 @@ import java.util.Arrays;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+// Emulator: Pixel 4 API 33
 public class MainActivity extends AppCompatActivity {
 
 
