@@ -14,7 +14,14 @@
 
     <!-- Restart Button -->
     <string name="restart_game">Restart Game</string>
-    <string name="restart_button_desc">Button to restart the Tic-Tac-Toe game</string>
+
+
+    <!-- Score Messages -->
+    <string name="score_x">X: %d</string>
+    <string name="score_o">O: %d</string>
+    <string name="x_0">X: 0</string>
+    <string name="o_0">O: 0</string>
+    <string name="reset_score">Reset Score</string>
 
     <!-- Tic-Tac-Toe Grid Cell Descriptions -->
     <string name="cell_00">Cell 00 of Tic-Tac-Toe grid</string>
@@ -26,5 +33,6 @@
     <string name="cell_20">Cell 20 of Tic-Tac-Toe grid</string>
     <string name="cell_21">Cell 21 of Tic-Tac-Toe grid</string>
     <string name="cell_22">Cell 22 of Tic-Tac-Toe grid</string>
+
 </resources>
 

@@ -14,27 +14,39 @@ import androidx.core.content.ContextCompat;
 public class MainActivity extends AppCompatActivity {
 
 
-    int activePlayer = 0;
+    private int activePlayer = 0;  // 0 = X, 1 = O
+    private int scoreX = 0;        // Score counter for Player X
+    private int scoreO = 0;        // Score counter for Player O
+    private boolean gameActive = true; // Game status flag
 
-    int[] gameState = {2, 2, 2, 2, 2, 2, 2, 2, 2};
+    // Represents the board state, where:
+    // 0 = X, 1 = O, 2 = Empty
+    private final int[] gameState = {2, 2, 2, 2, 2, 2, 2, 2, 2};
 
-    // Winning positions (Rows, Columns, and Diagonals)
-    int[][] winPositions = {
+    // Possible winning positions
+    private final int[][] winPositions = {
             {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // Rows
             {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // Columns
             {0, 4, 8}, {2, 4, 6}  // Diagonals
     };
-
-
-    boolean gameActive = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set the initial status text
+        // Initialize game status and scores
         updateStatusText();
+        updateScoreText();
+    }
+
+    // Updates the displayed score values
+    private void updateScoreText() {
+        TextView scoreXText = findViewById(R.id.score_x);
+        TextView scoreOText = findViewById(R.id.score_o);
+
+        scoreXText.setText(getString(R.string.score_x, scoreX));
+        scoreOText.setText(getString(R.string.score_o, scoreO));
     }
 
     // Handles cell clicks during the game
@@ -47,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         // Ignore already occupied cells
         if (gameState[tappedCell] != 2) return;
 
-        // Update game state
+        // Update the game state with the active player's move
         gameState[tappedCell] = activePlayer;
 
-        // Set appropriate symbol image based on the player
+        // Set the appropriate symbol based on the player
         if (activePlayer == 0) {
             img.setImageResource(R.drawable.x_symbol);
             activePlayer = 1;
@@ -64,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         img.setScaleY(0f);
         img.animate().scaleX(1f).scaleY(1f).setDuration(300).start();
 
-        // Check for a winner
+        // Check if there's a winner
         checkWinner();
 
         // Update status text only if the game is still active
@@ -73,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Updates the status text whose turn it is
+    // Updates the game status text which player's turn it is
     private void updateStatusText() {
         TextView status = findViewById(R.id.status);
         int newColor;
@@ -86,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             newColor = ContextCompat.getColor(this, R.color.o_color);
         }
 
-        // Smooth color transition animation
+        // Smooth transition animation for text color
         ObjectAnimator colorAnim = ObjectAnimator.ofObject(
                 status, "textColor", new ArgbEvaluator(),
                 status.getCurrentTextColor(), newColor
@@ -95,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         colorAnim.start();
     }
 
-    // Checks if a player has won the game
+    // Checks if a player has won or if it's a draw
     public void checkWinner() {
         TextView status = findViewById(R.id.status);
 
@@ -112,15 +124,23 @@ public class MainActivity extends AppCompatActivity {
                         ContextCompat.getColor(this, R.color.x_color) :
                         ContextCompat.getColor(this, R.color.o_color);
 
-                // Update status text with winner message
+                // Update the score
+                if (winner.equals("X")) {
+                    scoreX++;
+                } else {
+                    scoreO++;
+                }
+                updateScoreText();
+
+                // Display winner message
                 status.setText(getString(winner.equals("X") ? R.string.player_x_wins : R.string.player_o_wins));
                 status.setTextColor(winnerColor);
 
-                return;  // Exit loop early once a winner is found
+                return;  // Exit loop once a winner is found
             }
         }
 
-        // If no winner, check for a draw
+        // If no winner, check if it's a draw
         if (!isMovesLeft()) {
             gameActive = false;
             status.setText(getString(R.string.draw_message));
@@ -128,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Checks if there are any empty cells left
+    // Checks if there are empty cells left (to prevent a draw)
     private boolean isMovesLeft() {
         for (int state : gameState) {
             if (state == 2) return true; // If any cell is empty, moves are still left
@@ -136,28 +156,33 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    // Restarts the game
+    // Resets the game board but keeps the score
     public void restartGame(View view) {
         gameActive = true;
         activePlayer = 0;
         Arrays.fill(gameState, 2); // Reset game state to empty cells
 
-        // Reset status text to player X's turn
+        // Reset status text to indicate Player X's turn
         TextView status = findViewById(R.id.status);
         status.setText(getString(R.string.player_x_turn));
         status.setTextColor(ContextCompat.getColor(this, R.color.x_color));
 
-        // Reset all image views to empty
-        int[][] cellIds = {
-                {R.id.cell_00, R.id.cell_01, R.id.cell_02},
-                {R.id.cell_10, R.id.cell_11, R.id.cell_12},
-                {R.id.cell_20, R.id.cell_21, R.id.cell_22}
+        // Reset all image views to empty (clear X and O symbols)
+        int[] cellIds = {
+                R.id.cell_00, R.id.cell_01, R.id.cell_02,
+                R.id.cell_10, R.id.cell_11, R.id.cell_12,
+                R.id.cell_20, R.id.cell_21, R.id.cell_22
         };
 
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                ((ImageView) findViewById(cellIds[row][col])).setImageResource(0); // Clear images
-            }
+        for (int cellId : cellIds) {
+            ((ImageView) findViewById(cellId)).setImageResource(0);
         }
+    }
+
+    // Resets the score counter and updates the UI
+    public void resetScore(View view) {
+        scoreX = 0;
+        scoreO = 0;
+        updateScoreText();
     }
 }

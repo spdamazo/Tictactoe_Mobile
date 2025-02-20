@@ -1,11 +1,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:padding="16dp"
-    android:background="@android:color/white">
-
+    tools:ignore="Overdraw">
 
     <!-- Tic-Tac-Toe Grid -->
     <TextView
@@ -27,28 +28,28 @@
         android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:rowCount="3"
-        android:padding="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        app:layout_constraintTop_toBottomOf="@id/status"
-        app:layout_constraintStart_toStartOf="parent"
+        android:columnCount="3"
+        android:padding="8dp"
+        android:rowCount="3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/restartButton">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status">
 
         <!-- Tic-Tac-Toe Cells -->
-
         <ImageView
             android:id="@+id/cell_00"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="2dp"
             android:background="@color/tic_tac_toe_background"
+            android:contentDescription="@string/cell_00"
             android:onClick="cellClicked"
             android:scaleType="fitCenter"
-            android:tag="0"
-            android:contentDescription="@string/cell_00" />
+            android:tag="0" />
 
         <ImageView
             android:id="@+id/cell_01"
@@ -56,10 +57,11 @@
             android:layout_height="100dp"
             android:layout_margin="2dp"
             android:background="@color/tic_tac_toe_background"
+            android:contentDescription="@string/cell_01"
             android:onClick="cellClicked"
             android:scaleType="fitCenter"
             android:tag="1"
-            android:contentDescription="@string/cell_01" />
+            tools:ignore="ImageContrastCheck" />
 
         <ImageView
             android:id="@+id/cell_02"
@@ -67,10 +69,11 @@
             android:layout_height="100dp"
             android:layout_margin="2dp"
             android:background="@color/tic_tac_toe_background"
+            android:contentDescription="@string/cell_02"
             android:onClick="cellClicked"
             android:scaleType="fitCenter"
             android:tag="2"
-            android:contentDescription="@string/cell_02" />
+            tools:ignore="ImageContrastCheck" />
 
         <ImageView
             android:id="@+id/cell_10"
@@ -78,10 +81,10 @@
             android:layout_height="100dp"
             android:layout_margin="2dp"
             android:background="@color/tic_tac_toe_background"
+            android:contentDescription="@string/cell_10"
             android:onClick="cellClicked"
             android:scaleType="fitCenter"
-            android:tag="3"
-            android:contentDescription="@string/cell_10" />
+            android:tag="3" />
 
         <ImageView
             android:id="@+id/cell_11"
@@ -89,10 +92,10 @@
             android:layout_height="100dp"
             android:layout_margin="2dp"
             android:background="@color/tic_tac_toe_background"
+            android:contentDescription="@string/cell_11"
             android:onClick="cellClicked"
             android:scaleType="fitCenter"
-            android:tag="4"
-            android:contentDescription="@string/cell_11" />
+            android:tag="4" />
 
         <ImageView
             android:id="@+id/cell_12"
@@ -100,10 +103,10 @@
             android:layout_height="100dp"
             android:layout_margin="2dp"
             android:background="@color/tic_tac_toe_background"
+            android:contentDescription="@string/cell_12"
             android:onClick="cellClicked"
             android:scaleType="fitCenter"
-            android:tag="5"
-            android:contentDescription="@string/cell_12" />
+            android:tag="5" />
 
         <ImageView
             android:id="@+id/cell_20"
@@ -111,10 +114,10 @@
             android:layout_height="100dp"
             android:layout_margin="2dp"
             android:background="@color/tic_tac_toe_background"
+            android:contentDescription="@string/cell_20"
             android:onClick="cellClicked"
             android:scaleType="fitCenter"
-            android:tag="6"
-            android:contentDescription="@string/cell_20" />
+            android:tag="6" />
 
         <ImageView
             android:id="@+id/cell_21"
@@ -122,10 +125,10 @@
             android:layout_height="100dp"
             android:layout_margin="2dp"
             android:background="@color/tic_tac_toe_background"
+            android:contentDescription="@string/cell_21"
             android:onClick="cellClicked"
             android:scaleType="fitCenter"
-            android:tag="7"
-            android:contentDescription="@string/cell_21" />
+            android:tag="7" />
 
         <ImageView
             android:id="@+id/cell_22"
@@ -133,27 +136,76 @@
             android:layout_height="100dp"
             android:layout_margin="2dp"
             android:background="@color/tic_tac_toe_background"
+            android:contentDescription="@string/cell_22"
             android:onClick="cellClicked"
             android:scaleType="fitCenter"
-            android:tag="8"
-            android:contentDescription="@string/cell_22" />
+            android:tag="8" />
     </GridLayout>
 
-    <!-- Restart Button -->
-    <Button
-        android:id="@+id/restartButton"
+    <!-- Scoreboard -->
+    <TextView
+        android:id="@+id/score_x"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/button_background"
-        android:onClick="restartGame"
-        android:padding="12dp"
-        android:text="@string/restart_game"
-        android:textColor="@color/button_text"
-        android:textSize="18sp"
+        android:text="@string/x_0"
+        android:textColor="@color/soft_black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gridLayout" />
+
+    <TextView
+        android:id="@+id/score_o"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/o_0"
+        android:textColor="@color/soft_black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gridLayout" />
+
+
+    <!-- Reset and Restart Buttons -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gridLayout">
+
+        <Button
+            android:id="@+id/resetScoreButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_background"
+            android:onClick="resetScore"
+            android:padding="12dp"
+            android:text="@string/reset_score"
+            android:textColor="@color/button_text"
+            android:textSize="18sp"
+            android:layout_margin="2dp" />
+
+        <Button
+            android:id="@+id/restartButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_background"
+            android:onClick="restartGame"
+            android:padding="12dp"
+            android:text="@string/restart_game"
+            android:textColor="@color/button_text"
+            android:textSize="18sp"
+            android:layout_margin="2dp"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
